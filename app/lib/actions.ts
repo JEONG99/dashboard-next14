@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { sql } from '@vercel/postgres';
 import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
@@ -116,6 +116,14 @@ export async function authenticate(
           return 'Something went wrong';
       }
     }
+    throw err;
+  }
+}
+
+export async function logout() {
+  try {
+    await signOut();
+  } catch (err) {
     throw err;
   }
 }
